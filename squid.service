@@ -1,0 +1,29 @@
+[Unit]
+Description=Podman container-squid.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network.target
+After=network-online.target
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+ExecStartPre=-/usr/bin/podman rm --ignore -f %n
+ExecStartPre=/usr/bin/rm -f %t/%n-pid
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/%n-pid \
+	--cgroups=no-conmon \
+	-v /service/squid/squid:/etc/squid:z \
+	-v /var/log/squid:/var/log/squid:z \
+	-e TZ=US/Eastern \
+	-p 3128:3128 \
+	--name %n \
+	--rm \
+	-d \
+	squid
+ExecStop=/usr/bin/podman stop --ignore -t 10 %n
+ExecStopPost=/usr/bin/podman rm --ignore -f %n
+PIDFile=%t/%n-pid
+KillMode=none
+Type=forking
+
+[Install]
+WantedBy=multi-user.target default.target
