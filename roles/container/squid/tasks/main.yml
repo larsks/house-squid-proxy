@@ -3,12 +3,14 @@
   copy:
     src: squid
     dest: /service
+  notify: restart squid
 
 - name: build squid image
   command: >-
     podman build -t squid .
   args:
     chdir: /service/squid
+  changed_when: false
 
 - name: ensure log directory exists
   file:
@@ -23,7 +25,7 @@
     sysctl_set: true
 
 - name: install systemd unit
-  copy:
+  template:
     src: squid.service
     dest: /etc/systemd/system/squid.service
   notify:
