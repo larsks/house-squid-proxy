@@ -1,0 +1,5 @@
+---
+- name: install python-libselinux
+  package:
+    name: python3-libselinux
+    state: installed

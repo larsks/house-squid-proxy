@@ -14,7 +14,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/%n-pid \
 	-v /service/squid/squid:/etc/squid:z \
 	-v /var/log/squid:/var/log/squid:z \
 	-e TZ=US/Eastern \
-	-p 3128:3128 \
+	-p 192.168.1.200:3128:3128 \
 	--name %n \
 	--rm \
 	-d \

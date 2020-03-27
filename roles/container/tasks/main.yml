@@ -1,0 +1,10 @@
+---
+- name: install podman
+  package:
+    name: podman
+    state: installed
+
+- name: ensure /service exists
+  file:
+    path: /service
+    state: directory

@@ -1,0 +1,37 @@
+---
+- name: install container files
+  copy:
+    src: squid
+    dest: /service
+
+- name: build squid image
+  command: >-
+    podman build -t squid .
+  args:
+    chdir: /service/squid
+
+- name: ensure log directory exists
+  file:
+    path: /var/log/squid
+    state: directory
+
+- name: enable nonlocalbind
+  sysctl:
+    name: net.ipv4.ip_nonlocal_bind
+    value: '1'
+    state: present
+    sysctl_set: true
+
+- name: install systemd unit
+  copy:
+    src: squid.service
+    dest: /etc/systemd/system/squid.service
+  notify:
+    - reload systemd
+    - restart squid
+
+- name: activate squid service
+  service:
+    name: squid.service
+    state: started
+    enabled: true
