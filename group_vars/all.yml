@@ -3,4 +3,4 @@ router_name: HOUSE_PROXY
 interface: eth0.100
 virtual_router_id: 64
 auth_pass: 6264
-virtual_ipaddress: 192.168.1.200
+virtual_ipaddress: 192.168.1.201
