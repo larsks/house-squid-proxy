@@ -1,0 +1,12 @@
+---
+- name: copy image files
+  copy:
+    src: darkhttpd
+    dest: /service
+
+- name: build darkhttpd image
+  include_role:
+    name: podman_image
+  vars:
+    image_dir: /service/darkhttpd
+    image_tag: darkhttpd

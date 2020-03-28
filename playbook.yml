@@ -5,3 +5,15 @@
       tags: [keepalived]
     - role: container/squid
       tags: [squid]
+    - role: container/pacserver
+      tags: [pacserver]
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: validate squid
+      tags: [check]
+      uri:
+        url: "http://{{virtual_ipaddress}}:3128/"
+        status_code:
+          - 400

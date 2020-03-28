@@ -1,0 +1,31 @@
+[Unit]
+Description=Podman container-pacserver.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network.target
+After=network-online.target
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+ExecStartPre=-/usr/bin/podman rm --ignore -f %n
+ExecStartPre=/usr/bin/rm -f %t/%n-pid
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/%n-pid \
+	--cgroups=no-conmon \
+	-v /service/pacserver:/service/pacserver:z \
+	-e TZ=US/Eastern \
+	-p {{ virtual_ipaddress }}:80:80 \
+	--name %n \
+	--rm \
+	-d \
+	darkhttpd \
+	/service/pacserver \
+	--port 80 \
+	--mimetypes /service/pacserver/mimetypes
+ExecStop=/usr/bin/podman stop --ignore -t 10 %n
+ExecStopPost=/usr/bin/podman rm --ignore -f %n
+PIDFile=%t/%n-pid
+KillMode=none
+Type=forking
+
+[Install]
+WantedBy=multi-user.target default.target

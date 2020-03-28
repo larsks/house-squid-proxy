@@ -1,0 +1,29 @@
+---
+- name: ensure service directory exists
+  file:
+    path: /service/pacserver
+    state: directory
+
+- name: install mimetypes file
+  copy:
+    src: mimetypes
+    dest: /service/pacserver/mimetypes
+
+- name: install proxy.pac
+  template:
+    src: proxy.pac
+    dest: /service/pacserver/proxy.pac
+
+- name: install systemd unit
+  template:
+    src: pacserver.service
+    dest: /etc/systemd/system/pacserver.service
+  notify:
+    - reload systemd
+    - restart pacserver
+
+- name: activate pacserver service
+  service:
+    name: pacserver
+    state: started
+    enabled: true
