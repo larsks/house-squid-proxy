@@ -19,6 +19,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/%n-pid \
 	--rm \
 	-d \
 	squid
+ExecReload=/usr/bin/podman kill --signal HUP %n
 ExecStop=/usr/bin/podman stop --ignore -t 10 %n
 ExecStopPost=/usr/bin/podman rm --ignore -f %n
 PIDFile=%t/%n-pid
