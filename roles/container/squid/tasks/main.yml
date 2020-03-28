@@ -6,11 +6,11 @@
   notify: restart squid
 
 - name: build squid image
-  command: >-
-    podman build -t squid .
-  args:
-    chdir: /service/squid
-  changed_when: false
+  include_role:
+    name: podman_image
+  vars:
+    image_dir: /service/squid
+    image_tag: squid
 
 - name: ensure log directory exists
   file:
