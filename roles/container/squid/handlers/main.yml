@@ -8,3 +8,8 @@
   service:
     name: squid.service
     state: reloaded
+
+- name: restart squid-cron
+  service:
+    name: squid-cron.service
+    state: restarted

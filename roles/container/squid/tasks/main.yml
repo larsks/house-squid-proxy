@@ -25,7 +25,7 @@
     state: present
     sysctl_set: true
 
-- name: install systemd unit
+- name: install squid systemd unit
   template:
     src: squid.service
     dest: /etc/systemd/system/squid.service
@@ -33,8 +33,19 @@
     - reload systemd
     - restart squid
 
-- name: activate squid service
+- name: install squid-cron systemd unit
+  copy:
+    src: squid-cron.service
+    dest: /etc/systemd/system/squid-cron.service
+  notify:
+    - reload systemd
+    - restart squid-cron
+
+- name: activate squid services
   service:
-    name: squid.service
+    name: '{{ item }}'
     state: started
     enabled: true
+  loop:
+    - squid
+    - squid-cron
