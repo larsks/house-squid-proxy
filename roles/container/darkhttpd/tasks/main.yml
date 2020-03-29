@@ -5,6 +5,8 @@
     dest: /service
 
 - name: build darkhttpd image
-  podman_image:
+  containers.podman.podman_image:
+    state: build
+    force: true
     name: darkhttpd
     path: /service/darkhttpd

@@ -6,7 +6,9 @@
   notify: reload squid
 
 - name: build squid image
-  podman_image:
+  containers.podman.podman_image:
+    state: build
+    force: true
     name: squid
     path: /service/squid
   notify: restart squid
