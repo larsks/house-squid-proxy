@@ -1,4 +1,0 @@
----
-- name: build image
-  command: >-
-    podman build {% if image_tag %}-t {{ image_tag }}{% endif %} {{ image_dir }}

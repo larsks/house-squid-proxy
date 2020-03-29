@@ -3,14 +3,13 @@
   copy:
     src: squid
     dest: /service
-  notify: restart squid
+  notify: reload squid
 
 - name: build squid image
-  include_role:
-    name: podman_image
-  vars:
-    image_dir: /service/squid
-    image_tag: squid
+  podman_image:
+    name: squid
+    path: /service/squid
+  notify: restart squid
 
 - name: ensure log directory exists
   file:
