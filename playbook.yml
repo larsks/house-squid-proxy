@@ -1,6 +1,20 @@
 ---
 - hosts: all
   gather_facts: false
+  tags: [hostname]
+  tasks:
+    - name: get current hostname
+      command: >-
+        hostname
+      register: hostname
+
+    - name: set hostname to inventory_hostname
+      command: >-
+        hostnamectl set-hostname {{ inventory_hostname }}
+      when: hostname.stdout != inventory_hostname
+
+- hosts: all
+  gather_facts: false
   roles:
     - role: keepalived
       tags: [keepalived]
