@@ -13,7 +13,7 @@ ExecStartPre=/usr/bin/rm -f %t/%n-pid
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/%n-pid \
 	--cgroups=no-conmon \
 	--volumes-from squid.service \
-	-v /service/squid/periodic:/etc/periodic/hourly:z \
+	-v /service/squid/periodic:/etc/periodic/daily:z \
 	--pid container:squid.service \
 	-e TZ=US/Eastern \
 	--name %n \

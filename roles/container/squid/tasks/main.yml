@@ -3,6 +3,7 @@
   copy:
     src: squid
     dest: /service
+    mode: preserve
   notify: reload squid
 
 - name: build squid image
