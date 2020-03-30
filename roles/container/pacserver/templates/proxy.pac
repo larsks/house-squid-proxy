@@ -16,7 +16,7 @@ function is_school_hours() {
 
 function FindProxyForURL(url, host) {
     if (is_school_hours() || is_night_hours()) {
-        return "PROXY {{ virtual_ipaddress }}:3128; DIRECT";
+        return "PROXY {{ virtual_ipaddress }}:3128";
     } else {
         return "DIRECT";
     }
