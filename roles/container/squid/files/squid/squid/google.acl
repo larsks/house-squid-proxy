@@ -24,3 +24,13 @@ apis.google.com
 lh[0-9].google.com
 [0-9].client-channel.google.com
 clients[0-9].google.com
+mail.google.com
+gmail.com
+hangouts.google.com
+mtalk.google.com
+ggpht.com
+googlevideo.com
+appengine.google.com
+youtube.com
+ytimg.com
+ajax.googleapis.com
