@@ -7,10 +7,7 @@ function is_night_hours() {
 
 function is_school_hours() {
     return (
-        weekdayRange("MON", "FRI") &&
-        (
-            timeRange(9,0,13,30) ||
-        )
+        weekdayRange("MON", "FRI") && timeRange(9,0,13,30)
     );
 }
 
