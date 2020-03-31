@@ -7,6 +7,7 @@
       command: >-
         hostname
       register: hostname
+      changed_when: false
 
     - name: set hostname to inventory_hostname
       command: >-
